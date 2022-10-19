@@ -8,4 +8,7 @@ import lombok.Data;
 public class Message {
   private int id;
   private String message;
+  private String fromUser;
+  private String toUser;
+
 }
