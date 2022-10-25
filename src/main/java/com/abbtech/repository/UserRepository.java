@@ -26,8 +26,7 @@ public class UserRepository extends AbstractConnection implements DAO<User> {
           && rs.getString("password").equals(password)) {
         result = true;
       }
-    } catch (SQLException e) {
-      result = false;
+
     } catch (Exception e) {
       result = false;
     }
@@ -35,10 +34,20 @@ public class UserRepository extends AbstractConnection implements DAO<User> {
     return result;
   }
 
-  public boolean register(String username, String password,String ppLink){
-    return false;
+  public String register(User user){
+    try(Connection c = connection()) {
+      PreparedStatement st = c.prepareStatement("INSERT INTO user(nickname,password,ppLink) VALUES (?,?,?)");
+      st.setString(1,user.getUsername());
+      st.setString(2,user.getPassword());
+      st.setInt(3,user.getLink().getId());
+      st.execute();
+      return "Registration is succesfull";
+
+    } catch (Exception e) {
+      return "Registration is failed";
+    }
   }
-  public Optional<User> getByUsername(String username) {
+  public Optional<User> findByUsername(String username) {
     User result = null;
     try (Connection c = connection()) {
       PreparedStatement st = c.prepareStatement("SELECT *FROM user WHERE username = ?");
@@ -72,7 +81,7 @@ public class UserRepository extends AbstractConnection implements DAO<User> {
     List<User> users = new ArrayList<>();
     try (Connection c = connection()) {
       Statement statement = c.createStatement();
-      statement.execute("SELECT u.id," + " u.username," + " u.idpp " + "FROM users u");
+      statement.execute("SELECT u.id, u.username, u.idpp FROM users u");
       ResultSet rs = statement.getResultSet();
       while (rs.next()) {
         users.add(createUser(rs));
@@ -132,4 +141,5 @@ public class UserRepository extends AbstractConnection implements DAO<User> {
   private User createUser(ResultSet rs) throws SQLException {
     return new User(rs.getInt("id"), rs.getString("username"), rs.getString("password"), rs.getInt("idpp"));
   }
+
 }

@@ -4,16 +4,23 @@ import com.abbtech.domain.Message;
 import com.abbtech.repository.db.AbstractConnection;
 import com.abbtech.repository.db.DAO;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class MessageRepository extends AbstractConnection implements DAO<Message> {
+
   @Override
   public List<Message> getAll() {
     List<Message> messages = new ArrayList<>();
     try (Connection c = connection()) {
       Statement st = c.createStatement();
-      st.execute("SELECT *FROM messages");
+      st.execute("SELECT * FROM messages");
       ResultSet rs = st.getResultSet();
       while (rs.next()) {
         messages.add(createMessage(rs));
@@ -28,7 +35,7 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
   public Optional<Message> getById(int id) {
     Message result = null;
     try (Connection c = connection()) {
-      PreparedStatement st = c.prepareStatement("SELECT *FROM message where id = ?");
+      PreparedStatement st = c.prepareStatement("SELECT * FROM message where id = ?");
       st.setInt(1, id);
       st.execute();
       ResultSet rs = st.getResultSet();
@@ -46,7 +53,8 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
   @Override
   public boolean add(Message value) {
     try (Connection c = connection()) {
-      PreparedStatement st = connection().prepareStatement("INSERT into message(message,fromUser,touser) values (?,?,?)");
+      PreparedStatement st = connection()
+          .prepareStatement("INSERT into message(message,fromUser,touser) values (?,?,?)");
       st.setString(1, "message");
       st.setString(2, "fromUser");
       st.setString(3, "toUser");
@@ -75,4 +83,5 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
     return new Message(rs.getInt("id"), rs.getString("message"),
         rs.getString("fromUser"), rs.getString("toUser"));
   }
+
 }

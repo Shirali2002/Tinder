@@ -20,10 +20,9 @@ public class MessageServlet extends HttpServlet {
     List<Message> messages = new ArrayList<>();
     try {
       messages = messageRepo.getAll();
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
-  }
-    req.setAttribute("messages",messages);
+    }
+    req.setAttribute("messages", messages);
   }
 }
