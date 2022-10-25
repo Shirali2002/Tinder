@@ -3,6 +3,7 @@ package com.abbtech.controller;
 import com.abbtech.domain.User;
 import com.abbtech.repository.MessageRepository;
 import com.abbtech.repository.UserRepository;
+import com.abbtech.service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,9 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class LoginServlet extends HttpServlet {
@@ -44,11 +42,11 @@ public class LoginServlet extends HttpServlet {
       req.setAttribute("msg", "enter password again");
       req.getRequestDispatcher("WEB-INF/login.jsp").forward(req, resp); //changes
     } else {
-      UserRepository userRepo = new UserRepository();
-      boolean result = userRepo.login(username, password);
+      UserService userService = new UserService();
+      Optional<User> result = userService.login(username, password);
 
-      if (result) {
-        Optional<User> user = userRepo.findByUsername(username);
+      if (result.isPresent()) {
+        Optional<User> user = userService.findByUsername(username);
         HttpSession session = req.getSession(true);
         session.setMaxInactiveInterval(1800);
         session.setAttribute("id", user.get().getId());
