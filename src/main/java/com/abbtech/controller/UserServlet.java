@@ -12,19 +12,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/users")
-public class                                                                                                                                                      UserServlet extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    UserRepository userRepo = new UserRepository();
-    List<User> users = new ArrayList<>();
-    try{
-      users = userRepo.getAll();
+public class UserServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserRepository userRepo = new UserRepository();
+        List<User> users = new ArrayList<>();
+        try {
+            users = userRepo.getAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        req.setAttribute("users", users);
     }
-    catch (Exception e){
-      e.printStackTrace();
-    }
-    req.setAttribute("users", users);
-  }
 
 }
