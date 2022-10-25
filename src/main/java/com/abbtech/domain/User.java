@@ -13,9 +13,12 @@ public class User {
   private String username;
   private PpLink link;
 
-  public User(int id, String username, int linkId) {
+  private String password;
+
+  public User(int id, String username,String password, int linkId) {
     this.id = id;
     this.username = username;
+    this.password = password;
     this.link = getPpLink(linkId);
   }
 

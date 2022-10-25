@@ -2,7 +2,6 @@ package com.abbtech.controller;
 
 import com.abbtech.domain.User;
 import com.abbtech.repository.UserRepository;
-import com.abbtech.repository.db.AbstractConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/users")
-public class UserServlet extends HttpServlet {
+public class                                                                                                                                                      UserServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     UserRepository userRepo = new UserRepository();
