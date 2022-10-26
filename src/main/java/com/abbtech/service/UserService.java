@@ -24,12 +24,12 @@ public class UserService {
     userRepo.setLastLogin(id);
   }
 
-  public List<User> getAll() {
-    return userRepo.getAll();
+  public List<User> findAll() {
+    return userRepo.findAll();
   }
 
-  public Optional<User> getById(int id) {
-    return userRepo.getById(id);
+  public Optional<User> findById(int id) {
+    return userRepo.findById(id);
   }
 
   public boolean add(User value) {

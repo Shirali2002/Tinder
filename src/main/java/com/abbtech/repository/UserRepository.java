@@ -61,7 +61,7 @@ public class UserRepository extends AbstractConnection implements DAO<User> {
   }
 
   @Override
-  public List<User> getAll() {
+  public List<User> findAll() {
     List<User> users = new ArrayList<>();
     try (Connection c = connection()) {
       Statement statement = c.createStatement();
@@ -79,7 +79,7 @@ public class UserRepository extends AbstractConnection implements DAO<User> {
 
 
   @Override
-  public Optional<User> getById(int id) {
+  public Optional<User> findById(int id) {
     User result = null;
     try (Connection c = connection()) {
       PreparedStatement statement = c.prepareStatement("SELECT u.id," + " u.username," + " u.idpp " + "FROM users u" + "where u.id = ?");

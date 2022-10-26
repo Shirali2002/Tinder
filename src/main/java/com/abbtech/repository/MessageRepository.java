@@ -20,7 +20,7 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
 
 
   @Override
-  public List<Message> getAll() {
+  public List<Message> findAll() {
     List<Message> messages = new ArrayList<>();
     try (Connection c = connection()) {
       Statement st = c.createStatement();
@@ -36,7 +36,7 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
   }
 
   @Override
-  public Optional<Message> getById(int id) {
+  public Optional<Message> findById(int id) {
     Message result = null;
     try (Connection c = connection()) {
       PreparedStatement st = c.prepareStatement("SELECT * FROM message where id = ?");
