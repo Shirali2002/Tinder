@@ -22,4 +22,8 @@ public class User {
     this.lastSeen = lastseen;
     this.link = link;
   }
+
+  public User() {
+
+  }
 }

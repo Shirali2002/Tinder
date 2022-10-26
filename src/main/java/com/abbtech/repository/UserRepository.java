@@ -4,16 +4,61 @@ import com.abbtech.domain.User;
 import com.abbtech.repository.db.AbstractConnection;
 import com.abbtech.repository.db.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class UserRepository extends AbstractConnection implements DAO<User> {
+
+  public Optional<User> findByUsernameAndPassword(String username, String password) {
+    try (Connection c = connection()) {
+      PreparedStatement st = c.prepareStatement("SELECT * FROM user WHERE username = ? AND password = ?");
+      st.setString(1, username);
+      st.setString(2, password);
+      ResultSet rs = st.executeQuery();
+
+      if (rs.next()) {
+        return Optional.ofNullable(createUser(rs));
+
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return Optional.empty();
+  }
+
+  public Optional<User> findByUsername(String username) {
+    try (Connection c = connection()) {
+      PreparedStatement st = c.prepareStatement("SELECT * FROM user WHERE username = ?");
+      st.setString(1, username);
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+
+        return Optional.ofNullable(createUser(rs));
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    return Optional.empty();
+  }
+
+  public void setLastLogin(int id){
+    try (Connection c = connection()) {
+      PreparedStatement st = c.prepareStatement("UPDATE user SET lastseen = ? WHERE id = ?");
+      st.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+      st.setInt(2,id);
+      ResultSet rs = st.executeQuery();
+      if (rs.next()) {
+
+
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
+  }
 
   @Override
   public List<User> getAll() {

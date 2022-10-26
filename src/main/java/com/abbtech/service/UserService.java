@@ -12,46 +12,16 @@ import java.util.Optional;
 public class UserService {
   private final UserRepository userRepo = new UserRepository();
 
-  public Optional<User> login(String username, String password) {
-    List<User> allUser = userRepo.getAll();
-    return allUser.stream()
-        .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
-        .findFirst();
-  }
 
-  public String register(User user) {
-    List<User> allUser = userRepo.getAll();
-    Optional<User> user1 = allUser.stream()
-        .filter(u -> u.getUsername().equals(user.getUsername())).findFirst();
-    if (user1.isPresent()) {
-      return "Registration is failed";
-    } else {
-      allUser.add(user);
-      return "Registration us succesfull";
-    }
-
-  }
-
-  public String updatePassword(User user) {
-    List<User> allUser = userRepo.getAll();
-    Optional<User> user1 = allUser.stream()
-        .filter(u -> u.getUsername().equals(user.getUsername())).findFirst();
-    if (user1.isPresent()) {
-      user1.get().setPassword(user.getPassword());
-      return "Password could be changed succesfully";
-    } else {
-      return "Password could not be changed";
-    }
+  public Optional<User> findByUsernameAndPassword(String username, String password) {
+    return userRepo.findByUsernameAndPassword(username, password);
   }
 
   public Optional<User> findByUsername(String username) {
-    List<User> allUser = userRepo.getAll();
-    Optional<User> userByName = allUser.stream().filter(u -> u.getUsername().equals(username)).findAny();
-    if (userByName.isPresent()) {
-      return userByName;
-    } else {
-      return Optional.empty();
-    }
+    return userRepo.findByUsername(username);
+  }
+  public void setLastLogin(int id){
+    userRepo.setLastLogin(id);
   }
 
   public List<User> getAll() {
