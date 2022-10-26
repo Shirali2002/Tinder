@@ -15,4 +15,11 @@ public class User {
   private LocalDateTime lastSeen;
   private String link;
 
+  public User(int id, String username, String password,LocalDateTime lastseen, String link) {
+    this.id = id;
+    this.username = username;
+    this.password = password;
+    this.lastSeen = lastseen;
+    this.link = link;
+  }
 }
