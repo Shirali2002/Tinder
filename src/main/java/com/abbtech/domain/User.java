@@ -1,29 +1,40 @@
 package com.abbtech.domain;
 
-import com.abbtech.dto.PpLink;
-import com.abbtech.exceptions.NoSuchUserException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 public class User {
+
   private int id;
   private String username;
-  private PpLink link;
+  private String password;
+  private LocalDateTime lastSeen;
+  private String link;
 
-  public User(int id, String username, int linkId) {
+  public User(int id, String username, String password, LocalDateTime lastseen, String link) {
     this.id = id;
     this.username = username;
-    this.link = getPpLink(linkId);
+    this.password = password;
+    this.lastSeen = lastseen;
+    this.link = link;
   }
 
-  private PpLink getPpLink(int linkId) {
-    return Arrays.stream(PpLink.values())
-        .filter(p -> p.getId() == linkId)
-        .findFirst()
-        .orElseThrow(NoSuchUserException::new);
+  public String getLastSeenAsString() {
+    if (lastSeen == null) {
+      return "did not logged in";
+    }
+    DateTimeFormatter formatter;
+    if (lastSeen.getYear() == LocalDateTime.now().getYear()
+        && lastSeen.getDayOfYear() == LocalDateTime.now().getDayOfYear()) {
+      formatter = DateTimeFormatter.ofPattern("HH:mm");
+      return "today " + lastSeen.format(formatter);
+    } else {
+      formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+      return lastSeen.format(formatter);
+    }
   }
-
 }
