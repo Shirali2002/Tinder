@@ -29,6 +29,7 @@ public class TinderApp {
         servletHandler.addServlet(MessageServlet.class, "/message/*");
         servletHandler.addServlet(LogoutServlet.class, "/logout");
         servletHandler.addServlet(StaticFileServlet.class, "/*");
+        servletHandler.addServlet(StaticFileServlet.class, "/message/css/*");
 
         servletHandler.addFilter(CookieFilter.class, "/users", dt);
         servletHandler.addFilter(CookieFilter.class, "/liked", dt);

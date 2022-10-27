@@ -8,8 +8,8 @@ public class Session {
 
     private static String COOKIE_NAME = "user_id";
 
-    public static Optional<Cookie> find(HttpServletRequest rq) {
-        Cookie[] cookies = rq.getCookies();
+    public static Optional<Cookie> find(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(COOKIE_NAME)) {
@@ -20,8 +20,8 @@ public class Session {
         return Optional.empty();
     }
 
-    public static Cookie findOrThrow(HttpServletRequest rq) {
-        return find(rq)
+    public static Cookie findOrThrow(HttpServletRequest req) {
+        return find(req)
                 .orElseThrow(() -> new RuntimeException("Will never happen due to design"));
     }
 
@@ -29,8 +29,8 @@ public class Session {
         return new Cookie(COOKIE_NAME, String.valueOf(id));
     }
 
-    public static int getUserId(HttpServletRequest rq) {
-        return Integer.parseInt(findOrThrow(rq).getValue());
+    public static int getUserId(HttpServletRequest req) {
+        return Integer.parseInt(findOrThrow(req).getValue());
     }
 
 }
