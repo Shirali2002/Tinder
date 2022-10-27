@@ -3,25 +3,21 @@ package com.abbtech.service;
 import com.abbtech.domain.Message;
 import com.abbtech.repository.MessageRepository;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class MessageService {
+
   MessageRepository messageRepo = new MessageRepository();
 
-  public List<Message> getAll() {
-    return messageRepo.getAll();
-  }
-
-  public Optional<Message> getById(int id) {
-    return messageRepo.getById(id);
+  public List<Message> getBySenderAndReceiverId(int senderId, int receiverId) {
+    List<Message> messages = messageRepo.getBySenderAndReceiverId(senderId, receiverId);
+    messages.sort(Message.comparatorBySendDate);
+    return messages;
   }
 
   public boolean add(Message value) {
     return messageRepo.add(value);
   }
 
-  public boolean delete(int id) {
-    return messageRepo.delete(id);
-  }
 }
