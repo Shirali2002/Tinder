@@ -29,11 +29,11 @@ public class TemplateEngine {
         }};
     }
 
-    public void render(String templateFile, Map<String, Object> data, HttpServletResponse rs)
+    public void render(String templateFile, Map<String, Object> data, HttpServletResponse resp)
             throws IOException {
         try {
-            rs.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
-            config.getTemplate(templateFile).process(data, rs.getWriter());
+            resp.setCharacterEncoding(String.valueOf(StandardCharsets.UTF_8));
+            config.getTemplate(templateFile).process(data, resp.getWriter());
         } catch (TemplateException ex) {
             ex.printStackTrace();
         }
