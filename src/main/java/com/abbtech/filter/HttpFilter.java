@@ -21,8 +21,8 @@ public interface HttpFilter extends Filter {
     @Override
     default void init(FilterConfig filterConfig) throws ServletException {}
 
-    void doHttpFilter(HttpServletRequest rq,
-                      HttpServletResponse rs,
+    void doHttpFilter(HttpServletRequest req,
+                      HttpServletResponse resp,
                       FilterChain filterChain) throws IOException, ServletException;
 
     @Override
@@ -30,9 +30,9 @@ public interface HttpFilter extends Filter {
                           ServletResponse servletResponse,
                           FilterChain filterChain) throws IOException, ServletException {
         if (isHttp(servletRequest, servletResponse)) {
-            HttpServletRequest rq = (HttpServletRequest) servletRequest;
-            HttpServletResponse rs = (HttpServletResponse) servletResponse;
-            doHttpFilter(rq, rs, filterChain);
+            HttpServletRequest req = (HttpServletRequest) servletRequest;
+            HttpServletResponse resp = (HttpServletResponse) servletResponse;
+            doHttpFilter(req, resp, filterChain);
         }
         else filterChain.doFilter(servletRequest, servletResponse);
     }

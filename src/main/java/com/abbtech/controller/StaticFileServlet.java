@@ -12,10 +12,10 @@ public class StaticFileServlet extends HttpServlet {
 
     @SneakyThrows
     @Override
-    protected void doGet(HttpServletRequest rq, HttpServletResponse rs) {
-        String requestPath = !rq.getPathInfo().startsWith("/css") ? "/css".concat(rq.getPathInfo()) : rq.getPathInfo();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        String requestPath = !req.getPathInfo().startsWith("/css") ? "/css".concat(req.getPathInfo()) : req.getPathInfo();
         TemplateEngine freeMarker = new TemplateEngine();
-        freeMarker.render(requestPath, new HashMap<>(), rs);
+        freeMarker.render(requestPath, new HashMap<>(), resp);
     }
 
 }
