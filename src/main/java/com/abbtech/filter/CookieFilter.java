@@ -10,14 +10,14 @@ import java.io.IOException;
 
 public class CookieFilter implements HttpFilter {
 
-    private boolean isCookiePresent(HttpServletRequest req) {
-        return Session.find(req).isPresent();
-    }
+  private boolean isCookiePresent(HttpServletRequest req) {
+    return Session.find(req).isPresent();
+  }
 
-    @Override
-    public void doHttpFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
-        if (isCookiePresent(req)) filterChain.doFilter(req, resp);
-        else resp.sendRedirect("/login");
-    }
+  @Override
+  public void doHttpFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+    if (isCookiePresent(req)) filterChain.doFilter(req, resp);
+    else resp.sendRedirect("/login");
+  }
 
 }

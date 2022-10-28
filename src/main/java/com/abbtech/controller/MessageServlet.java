@@ -39,7 +39,7 @@ public class MessageServlet extends HttpServlet {
     userService.setLastSeen(id);
     int receiverId = Integer.parseInt(req.getPathInfo().substring(1));
     String message = req.getParameter("message");
-    if(!message.isEmpty()) messageService.add(new Message(-1, message, LocalDateTime.now(), id, receiverId));
+    if (!message.isEmpty()) messageService.add(new Message(-1, message, LocalDateTime.now(), id, receiverId));
     resp.sendRedirect("/message/" + receiverId);
   }
 }

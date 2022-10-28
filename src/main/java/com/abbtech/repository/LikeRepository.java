@@ -97,11 +97,7 @@ public class LikeRepository extends AbstractConnection implements DAO<Like> {
   }
 
   private Like createLike(ResultSet rs) throws SQLException {
-    return new Like(
-        rs.getInt("id"),
-        rs.getInt("fromid"),
-        rs.getInt("toid")
-    );
+    return new Like(rs.getInt("id"), rs.getInt("fromid"), rs.getInt("toid"));
   }
 
 }

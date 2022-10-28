@@ -8,9 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,18 +17,6 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
 
   @Override
   public List<Message> getAll() {
-//        List<Message> messages = new ArrayList<>();
-//        try (Connection c = connection()) {
-//            Statement st = c.createStatement();
-//            st.execute("SELECT * FROM messages");
-//            ResultSet rs = st.getResultSet();
-//            while (rs.next()) {
-//                messages.add(createMessage(rs));
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        return messages;
     return null;
   }
 
@@ -62,21 +48,6 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
 
   @Override
   public Optional<Message> getById(int id) {
-//        Message result = null;
-//        try (Connection c = connection()) {
-//            PreparedStatement st = c.prepareStatement("SELECT * FROM message where id = ?");
-//            st.setInt(1, id);
-//            st.execute();
-//            ResultSet rs = st.getResultSet();
-//            while (rs.next()) {
-//                result = createMessage(rs);
-//            }
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        return Optional.ofNullable(result);
     return Optional.empty();
   }
 
@@ -97,13 +68,6 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
 
   @Override
   public boolean delete(int id) {
-//        try (Connection c = connection()) {
-//
-//            Statement st = c.createStatement();
-//            return st.execute("DELETE FROM  message WHERE id = 1");
-//        } catch (Exception e) {
-//            return false;
-//        }
     return false;
   }
 
@@ -116,12 +80,5 @@ public class MessageRepository extends AbstractConnection implements DAO<Message
     );
   }
 
-//    private Message createMessageAllField(ResultSet rs) throws SQLException {
-//        return new Message(
-//                rs.getString("")
-//                rs.getString("message"),
-//                rs.getTimestamp("send_date")
-//        );
-//    }
 
 }

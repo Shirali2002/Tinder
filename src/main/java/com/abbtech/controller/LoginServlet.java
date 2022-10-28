@@ -49,8 +49,7 @@ public class LoginServlet extends HttpServlet {
         //
         resp.addCookie(cookie);
         resp.sendRedirect("/users");
-      }
-      else {
+      } else {
         resp.sendRedirect("/login");
       }
     }

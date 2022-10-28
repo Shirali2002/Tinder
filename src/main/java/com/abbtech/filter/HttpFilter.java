@@ -12,33 +12,33 @@ import java.io.IOException;
 
 public interface HttpFilter extends Filter {
 
-    private boolean isHttp(ServletRequest servletRequest,
-                           ServletResponse servletResponse) {
-        return servletRequest instanceof HttpServletRequest
-                && servletResponse instanceof HttpServletResponse;
-    }
+  private boolean isHttp(ServletRequest servletRequest,
+                         ServletResponse servletResponse) {
+    return servletRequest instanceof HttpServletRequest
+        && servletResponse instanceof HttpServletResponse;
+  }
 
-    @Override
-    default void init(FilterConfig filterConfig) throws ServletException {}
+  @Override
+  default void init(FilterConfig filterConfig) throws ServletException {
+  }
 
-    void doHttpFilter(HttpServletRequest req,
-                      HttpServletResponse resp,
-                      FilterChain filterChain) throws IOException, ServletException;
+  void doHttpFilter(HttpServletRequest req,
+                    HttpServletResponse resp,
+                    FilterChain filterChain) throws IOException, ServletException;
 
-    @Override
-    default void doFilter(ServletRequest servletRequest,
-                          ServletResponse servletResponse,
-                          FilterChain filterChain) throws IOException, ServletException {
-        if (isHttp(servletRequest, servletResponse)) {
-            HttpServletRequest req = (HttpServletRequest) servletRequest;
-            HttpServletResponse resp = (HttpServletResponse) servletResponse;
-            doHttpFilter(req, resp, filterChain);
-        }
-        else filterChain.doFilter(servletRequest, servletResponse);
-    }
+  @Override
+  default void doFilter(ServletRequest servletRequest,
+                        ServletResponse servletResponse,
+                        FilterChain filterChain) throws IOException, ServletException {
+    if (isHttp(servletRequest, servletResponse)) {
+      HttpServletRequest req = (HttpServletRequest) servletRequest;
+      HttpServletResponse resp = (HttpServletResponse) servletResponse;
+      doHttpFilter(req, resp, filterChain);
+    } else filterChain.doFilter(servletRequest, servletResponse);
+  }
 
-    @Override
-    default void destroy() {
-    }
+  @Override
+  default void destroy() {
+  }
 
 }
