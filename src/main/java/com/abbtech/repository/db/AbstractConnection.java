@@ -17,7 +17,9 @@ public abstract class AbstractConnection {
 
     public Connection connection() throws Exception {
         String url = HerokuEnv.jdbc_url();
-        return DriverManager.getConnection(url);
+        String user = HerokuEnv.jdbc_username();
+        String pass = HerokuEnv.jdbc_password();
+        return DriverManager.getConnection(url, user, pass);
     }
 
 }
