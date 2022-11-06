@@ -11,6 +11,7 @@ public class DbSetup {
                 password
         );
         Flyway flyway = new Flyway(config);
+        flyway.baseline();
         flyway.migrate();
     }
 }
