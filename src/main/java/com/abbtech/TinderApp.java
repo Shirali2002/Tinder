@@ -8,6 +8,8 @@ import com.abbtech.controller.RegisterServlet;
 import com.abbtech.controller.StaticFileServlet;
 import com.abbtech.controller.UserServlet;
 import com.abbtech.filter.CookieFilter;
+import com.abbtech.heroku.DbSetup;
+import com.abbtech.heroku.HerokuEnv;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
@@ -19,7 +21,9 @@ public class TinderApp {
     private static final EnumSet<DispatcherType> dt = EnumSet.of(DispatcherType.REQUEST);
 
     public static void main(String[] args) throws Exception {
-        Server server = new Server(1212);
+
+        DbSetup.migrate(HerokuEnv.jdbc_url(), HerokuEnv.jdbc_username(), HerokuEnv.jdbc_password());
+        Server server = new Server(HerokuEnv.port());
         ServletContextHandler servletHandler = new ServletContextHandler();
 
         servletHandler.addServlet(LoginServlet.class, "/login");
